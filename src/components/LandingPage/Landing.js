@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, makeStyles, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import Navbar from "../Navigation/Navbar";
 
 const useStyles = makeStyles({
   main: {
@@ -68,12 +69,13 @@ const Landing = () => {
 
   return (
     <>
+    <Navbar/>
       <Box className={classes.main}>
         <Box className={classes.container}>
           <Typography variant="h2" className={classes.mainHeader}>
             OS Project: G5 Team3
           </Typography>
-          <Typography variant="h3" className={classes.headerTxt}>
+          <Typography variant="h3" className={classes.headerTxt} class="text-gray-400">
             Page Replacement Algorithm
           </Typography>
           <Typography variant="h6" className={classes.description}>
