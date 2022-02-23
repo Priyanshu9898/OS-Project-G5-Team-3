@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
     marginTop: 15,
     marginBottom: 15,
-    width: "20%",
+    width: "25%",
   },
 
   lable: {
@@ -23,6 +23,7 @@ const useStyles = makeStyles({
     height: 30,
     borderRadius: 5,
     padding: "0 10px",
+    color: "black",
   },
 
   btns: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles({
     marginRight: 30,
   },
   errorMsg: {
-    color: "red",
+    color: "#ff3030",
   },
 });
 
@@ -146,7 +147,7 @@ const MainComponent = () => {
             color="primary"
             onClick={Fifo}
           >
-            FIFO
+            FCFS
           </Button>
           <Button
             className={classes.btn}

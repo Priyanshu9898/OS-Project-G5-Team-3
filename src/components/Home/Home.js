@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 import { Box, Typography, Button, makeStyles } from "@material-ui/core";
 
 // Components
 import MainComponent from "./MainComponent";
+import Navbar from "../Navigation/Navbar";
 
 const useStyles = makeStyles({
   container: {
-    marginTop: 20,
-
-    padding: "0 100px",
+    width: "100%",
+    height: "100vh",
+    backgroundColor: "#1a202c",
+    padding: "0 200px",
+    display: "flex",
+    flexDirection: "column",
+    color: "white",
   },
   header: {
+    marginTop: 20,
     marginBottom: 15,
-    marginLeft: 15,
   },
   description: {
     marginBottom: 15,
+    color: "rgb(156 163 175)",
   },
   btnInfo: {
     display: "flex",
@@ -26,7 +32,7 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
   info: {
-    color: "red",
+    color: "#f15550",
     marginBottom: 10,
   },
   btn: {
@@ -43,40 +49,46 @@ const Home = () => {
   };
 
   return (
-    <Box className={classes.container}>
-      {/* Header  */}
-      <Box className={classes.header}>
-        <Typography variant="h2">Page Replacement Algorithm</Typography>
-      </Box>
-      <hr />
-      {/* Discription Starts from here(Optional) */}
-      <Box className={classes.description}>
-        <Typography variant="h6">
-          The page replacement algorithm decides which memory page is to be
-          replaced. The process of replacement is sometimes called swap out or
-          write to disk. Page replacement is done when the requested page is not
-          found in the main memory (page fault).
-        </Typography>
-        <Box className={classes.btnInfo}>
-          <Typography className={classes.info}>
-            Want to learn more?? Click Button below
-          </Typography>
-          <Button
-            variant="contained"
-            // className={classes.btn}
-            color="primary"
-            onClick={handleInfoButton}
-          >
-            Know More
-          </Button>
-        </Box>
-      </Box>
-      <hr />
+    <>
+      {/* Navbar here */}
+      <Navbar />
 
-      {/* Main Component */}
-      <MainComponent />
-      
-    </Box>
+      <Box className={classes.container}>
+        {/* Header  */}
+        <Box className={classes.header}>
+          <Typography variant="h2">Page Replacement Algorithm</Typography>
+        </Box>
+        <hr />
+        {/* Discription Starts from here(Optional) */}
+        <Box className={classes.description}>
+          <Typography variant="h6">
+            The page replacement algorithm decides which memory page is to be
+            replaced. The process of replacement is sometimes called swap out or
+            write to disk. Page replacement is done when the requested page is
+            not found in the main memory (page fault).
+          </Typography>
+          <Box className={classes.btnInfo}>
+            <Typography className={classes.info}>
+              Want to learn more?? Click Button below
+            </Typography>
+            <Link to="/blog">
+              <Button
+                variant="contained"
+                // className={classes.btn}
+                color="primary"
+                onClick={handleInfoButton}
+              >
+                Know More
+              </Button>
+            </Link>
+          </Box>
+        </Box>
+        <hr />
+
+        {/* Main Component */}
+        <MainComponent />
+      </Box>
+    </>
   );
 };
 

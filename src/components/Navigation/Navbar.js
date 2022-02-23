@@ -61,7 +61,7 @@ const Navbar = () => {
     <AppBar position="static" className={classes.component}>
       <Toolbar className={classes.container}>
         <Box className={classes.logo}>
-          <Link to="/" className={classes.logoLink}>
+          <Link to="/home" className={classes.logoLink}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -80,7 +80,7 @@ const Navbar = () => {
           </Link>
         </Box>
         <Box className={classes.mainPages}>
-          <Link to="/" className={classes.link}>
+          <Link to="/home" className={classes.link}>
             <Typography variant="h6" color="inherit" className={classes.page}>
               Home
             </Typography>

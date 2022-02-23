@@ -1,9 +1,13 @@
 import React from "react";
-// import { Aboutalgo} from './Aboutalgo'
+
+import { Link } from "react-router-dom";
+
+import Navbar from "../Navigation/Navbar";
 
 const About = () => {
   return (
     <>
+      <Navbar />
       <div className="mainbody">
         <section class="text-gray-400 body-font bg-gray-900">
           <div class="container px-5 py-24 mx-auto">
@@ -141,9 +145,11 @@ const About = () => {
                 </a>
               </div>
             </div>
-            <button class="flex mx-auto mt-16 text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">
-              Main Page
-            </button>
+            <Link to="/">
+              <button class="flex mx-auto mt-16 text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">
+                Main Page
+              </button>
+            </Link>
           </div>
         </section>
       </div>
