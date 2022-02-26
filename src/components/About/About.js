@@ -13,16 +13,13 @@ const About = () => {
           <div class="container px-5 py-24 mx-auto">
             <div class="flex flex-col text-center w-full mb-20">
               <h2 class="text-xs text-red-400 tracking-widest font-medium title-font mb-1">
-                ROOF PARTY POLAROID
+                OS PROJECT
               </h2>
               <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">
-                Master Cleanse Reliac Heirloom
+                Page Replacement Algorithms
               </h1>
               <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-                Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-                gentrify, subway tile poke farm-to-table. Franzen you probably
-                haven't heard of them man bun deep jianbing selfies heirloom
-                prism food truck ugh squid celiac humblebrag.
+              The page replacement algorithm decides which memory page is to be replaced. The process of replacement is sometimes called swap out or write to disk. Page replacement is done when the requested page is not found in the main memory (page fault).
               </p>
             </div>
             <div class="flex flex-wrap">
@@ -32,8 +29,7 @@ const About = () => {
                 </h2>
                 <p class="leading-relaxed text-base mb-4">
                   {" "}
-                  20BCP158 <br /> Fingerstache flexitarian street art 8-bit
-                  waistcoat. Distillery hexagon disrupt edison bulbche.
+                  20BCP158 <br /> ROLE HERE
                 </p>
                 <a class="text-red-400 inline-flex items-center ">
                   Learn More
@@ -56,8 +52,7 @@ const About = () => {
                 </h2>
                 <p class="leading-relaxed text-base mb-4">
                   {" "}
-                  20BCP169 <br /> Fingerstache flexitarian street art 8-bit
-                  waistcoat. Distillery hexagon disrupt edison bulbche.
+                  20BCP169 <br /> ROLE HERE
                 </p>
                 <a class="text-red-400 inline-flex items-center ">
                   Learn More
@@ -79,8 +74,7 @@ const About = () => {
                   Dev Dalia
                 </h2>
                 <p class="leading-relaxed text-base mb-4">
-                  20BCP156 <br /> Fingerstache flexitarian street art 8-bit
-                  waistcoat. Distillery hexagon disrupt edison bulbche.
+                  20BCP156 <br /> ROLE HERE
                 </p>
                 <a class="text-red-400 inline-flex items-center ">
                   Learn More
@@ -102,8 +96,7 @@ const About = () => {
                   Vishwa Gajjar
                 </h2>
                 <p class="leading-relaxed text-base mb-4">
-                  20BCP171 <br /> Fingerstache flexitarian street art 8-bit
-                  waistcoat. Distillery hexagon disrupt edison bulbche.
+                  20BCP171 <br /> ROLE HERE
                 </p>
                 <a class="text-red-400 inline-flex items-center ">
                   Learn More
@@ -126,8 +119,7 @@ const About = () => {
                 </h2>
                 <p class="leading-relaxed text-base mb-4">
                   {" "}
-                  20BCP170 <br /> Fingerstache flexitarian street art 8-bit
-                  waistcoat. Distillery hexagon disrupt edison bulbche.
+                  20BCP170 <br /> ROLE HERE
                 </p>
                 <a class="text-red-400 inline-flex items-center ">
                   Learn More
