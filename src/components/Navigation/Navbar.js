@@ -31,17 +31,31 @@ const useStyles = makeStyles({
   mainPages: {
     display: "flex",
     flexDirection: "row",
+
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 30,
   },
   page: {
     marginRight: 25,
-    fontSize: 18,
+    fontSize: 20,
+    width: 120,
+
+    "&:hover": {
+      backgroundColor: "#f15550",
+      color: "white",
+
+      borderRadius: "18px",
+    },
   },
   link: {
     textDecoration: "none",
     color: "inherit",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    height: 30,
   },
   logoLink: {
     textDecoration: "none",

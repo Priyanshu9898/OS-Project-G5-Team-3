@@ -27,17 +27,18 @@ const useStyles = makeStyles({
   btnInfo: {
     display: "flex",
     marginTop: 15,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
   },
   info: {
     color: "#f15550",
     marginBottom: 10,
   },
   btn: {
-    backgroundColor: "#f15550",
+    // backgroundColor: "#f15550",
     color: "white",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
   },
 });
 
@@ -56,11 +57,14 @@ const Home = () => {
       <Box className={classes.container}>
         {/* Header  */}
         <Box className={classes.header}>
-          <Typography variant="h2">Page Replacement Algorithm</Typography>
+          <Typography variant="h1">
+            {/* Page Replacement Algorithm */}
+            Simulator
+          </Typography>
         </Box>
-        <hr />
+        {/* <hr /> */}
         {/* Discription Starts from here(Optional) */}
-        <Box className={classes.description}>
+        {/* <Box className={classes.description}>
           <Typography variant="h6">
             The page replacement algorithm decides which memory page is to be
             replaced. The process of replacement is sometimes called swap out or
@@ -68,22 +72,16 @@ const Home = () => {
             not found in the main memory (page fault).
           </Typography>
           <Box className={classes.btnInfo}>
-            <Typography className={classes.info}>
+            {/* <Typography className={classes.info}>
               Want to learn more?? Click Button below
-            </Typography>
-            <Link to="/blog">
-              <Button
-                variant="contained"
-                // className={classes.btn}
-                color="primary"
-                onClick={handleInfoButton}
-              >
-                Know More
-              </Button>
+            </Typography> *
+            <Link to="/blog" className={classes.btn}>
+              <Typography>Learn More</Typography>
+              <img src="./images/arrow-forward.png" alt="arrow" />
             </Link>
-          </Box>
-        </Box>
-        <hr />
+          </Box> */}
+        {/* </Box> */}
+        {/* <hr /> */}
 
         {/* Main Component */}
         <MainComponent />

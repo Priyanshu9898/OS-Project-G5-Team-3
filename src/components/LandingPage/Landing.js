@@ -82,6 +82,7 @@ const Landing = () => {
             write to disk. Page replacement is done when the requested page is
             not found in the main memory (page fault).
           </Typography>
+          {/* <img src="./images/os2.jpg" alt="OS" /> */}
           <Typography variant="h6" style={{ color: "white", marginTop: 40 }}>
             Team Members:
           </Typography>

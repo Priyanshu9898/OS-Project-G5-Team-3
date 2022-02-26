@@ -48,6 +48,7 @@ const MainComponent = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [seq, setSeq] = useState([]);
+  const [result, setResult] = useState([]);
 
   const frameHanadler = (e) => {
     setFrame(e.target.value);
@@ -74,7 +75,7 @@ const MainComponent = () => {
         setLoading(false);
         let seqArr = seq.split(" ");
         console.log(seqArr);
-        FIFO(seqArr);
+        setResult("fifo");
       } catch (e) {}
     }
   };
@@ -186,6 +187,15 @@ const MainComponent = () => {
 
         <hr />
       </form>
+
+      {/* result here */}
+      {result === "fifo" ? (
+        <>
+          <FIFO pages= {page} frames={frame} seq = {seq} />
+        </>
+      ) : (
+        <></>
+      )}
     </Box>
   );
 };
