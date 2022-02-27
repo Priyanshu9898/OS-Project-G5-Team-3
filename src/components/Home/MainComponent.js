@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
     marginTop: 15,
     marginBottom: 15,
-    width: "25%",
+    width: "100%",
   },
 
   lable: {
@@ -185,13 +185,13 @@ const MainComponent = () => {
           <></>
         )}
 
-        <hr />
+        {/* <hr /> */}
       </form>
 
       {/* result here */}
       {result === "fifo" ? (
         <>
-          <FIFO pages= {page} frames={frame} seq = {seq} />
+          <FIFO pages={page} frames={frame} seq={seq} />
         </>
       ) : (
         <></>

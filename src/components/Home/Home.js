@@ -9,15 +9,29 @@ import Navbar from "../Navigation/Navbar";
 const useStyles = makeStyles({
   container: {
     width: "100%",
-    height: "100vh",
+    // maxWidth: "100%",
+    // height: "100vh",
     backgroundColor: "#1a202c",
-    padding: "0 200px",
+    // padding: "0 200px",
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
     color: "white",
   },
+  box: {
+    marginTop: 60,
+    width: 800,
+    height: "60vh",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "1px solid white",
+    borderRadius: "30px",
+  },
   header: {
-    marginTop: 20,
+    // marginTop: 20,
     marginBottom: 15,
   },
   description: {
@@ -56,15 +70,16 @@ const Home = () => {
 
       <Box className={classes.container}>
         {/* Header  */}
-        <Box className={classes.header}>
-          <Typography variant="h1">
-            {/* Page Replacement Algorithm */}
-            Simulator
-          </Typography>
-        </Box>
-        {/* <hr /> */}
-        {/* Discription Starts from here(Optional) */}
-        {/* <Box className={classes.description}>
+        <Box className={classes.box}>
+          <Box className={classes.header}>
+            <Typography variant="h3">
+              {/* Page Replacement Algorithm */}
+              Simulator
+            </Typography>
+          </Box>
+          {/* <hr /> */}
+          {/* Discription Starts from here(Optional) */}
+          {/* <Box className={classes.description}>
           <Typography variant="h6">
             The page replacement algorithm decides which memory page is to be
             replaced. The process of replacement is sometimes called swap out or
@@ -80,11 +95,12 @@ const Home = () => {
               <img src="./images/arrow-forward.png" alt="arrow" />
             </Link>
           </Box> */}
-        {/* </Box> */}
-        {/* <hr /> */}
+          {/* </Box> */}
+          {/* <hr /> */}
 
-        {/* Main Component */}
-        <MainComponent />
+          {/* Main Component */}
+          <MainComponent />
+        </Box>
       </Box>
     </>
   );

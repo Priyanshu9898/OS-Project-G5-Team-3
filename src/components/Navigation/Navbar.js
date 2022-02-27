@@ -20,6 +20,7 @@ const useStyles = makeStyles({
     flexDirection: "row",
 
     alignItems: "center",
+    justifyContent: "space-between",
   },
 
   logo: {
@@ -34,10 +35,10 @@ const useStyles = makeStyles({
 
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: 30,
+    // marginLeft: 30,
   },
   page: {
-    marginRight: 25,
+    marginRight: 20,
     fontSize: 20,
     width: 120,
 
@@ -75,7 +76,7 @@ const Navbar = () => {
     <AppBar position="static" className={classes.component}>
       <Toolbar className={classes.container}>
         <Box className={classes.logo}>
-          <Link to="/home" className={classes.logoLink}>
+          <Link to="/" className={classes.logoLink}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -96,7 +97,7 @@ const Navbar = () => {
         <Box className={classes.mainPages}>
           <Link to="/home" className={classes.link}>
             <Typography variant="h6" color="inherit" className={classes.page}>
-              Home
+              Simulator
             </Typography>
           </Link>
           <Link to="/blog" className={classes.link}>
@@ -107,6 +108,11 @@ const Navbar = () => {
           <Link to="/about" className={classes.link}>
             <Typography variant="h6" color="inherit" className={classes.page}>
               About Us
+            </Typography>
+          </Link>
+          <Link to="/contact" className={classes.link}>
+            <Typography variant="h6" color="inherit" className={classes.page}>
+              Contact
             </Typography>
           </Link>
         </Box>
