@@ -5,13 +5,21 @@ import { Box, Typography, Button, makeStyles } from "@material-ui/core";
 // Components
 import FIFO from "../Algorithms/FIFO";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   inputBox: {
     display: "flex",
     flexDirection: "column",
     marginTop: 15,
     marginBottom: 15,
     width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      // padding: "0 10px",
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+      // padding: "0 10px",
+    },
   },
 
   lable: {
@@ -24,6 +32,12 @@ const useStyles = makeStyles({
     borderRadius: 5,
     padding: "0 10px",
     color: "black",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
   },
 
   btns: {
@@ -38,7 +52,7 @@ const useStyles = makeStyles({
   errorMsg: {
     color: "#ff3030",
   },
-});
+}));
 
 const MainComponent = () => {
   const classes = useStyles();

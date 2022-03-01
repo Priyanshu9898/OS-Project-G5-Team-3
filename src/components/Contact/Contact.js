@@ -5,7 +5,7 @@ import { db } from "../../firebase";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
     height: "100vh",
@@ -13,6 +13,15 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0 10px",
+    },
+    [theme.breakpoints.down("md")]: {
+      padding: "0 20px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      padding: "0 10px",
+    },
   },
 
   box: {
@@ -25,19 +34,77 @@ const useStyles = makeStyles({
     height: "69vh",
     border: "1px solid white",
     borderRadius: "30px",
+    [theme.breakpoints.down("md")]: {
+      width: "600",
+      height: "80vh",
+      border: "1px solid white",
+      borderRadius: "30px",
+      padding: "0 20px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      height: "45vh",
+      border: "none",
+      // padding: "12px",
+      padding: "0 10px",
+    },
+    // [theme.breakpoints.down("xs")]: {
+    //   width: "100%",
+    //   border: "none",
+    //   padding: "12px",
+    // },
+  },
+  headerText: {
+    color: "white",
+    fontSize: 45,
+    textAlign: "center",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 30,
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 30,
+    },
   },
   form: {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
     marginTop: 30,
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 20,
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 20,
+    },
   },
   label: {
     fontSize: 22,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 18,
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 18,
+    },
   },
   inp: {
     marginTop: 10,
     width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
   },
   input: {
     padding: "5px 10px",
@@ -46,6 +113,13 @@ const useStyles = makeStyles({
     width: 450,
     border: "1px solid black",
     borderRadius: "5px",
+    [theme.breakpoints.down("sm")]: {
+      padding: "5px 10px",
+      width: "300",
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
   },
   boxBtn: {
     display: "flex",
@@ -65,7 +139,7 @@ const useStyles = makeStyles({
       backgroundColor: "#fa2c2c",
     },
   },
-});
+}));
 
 const Contact = () => {
   const navigate = useNavigate();
@@ -134,75 +208,80 @@ const Contact = () => {
   return (
     <>
       <Navbar />
-      <Box className={classes.container}>
-        <Box className={classes.box}>
-          <Box style={{ marginTop: 30 }}>
-            <Typography
-              style={{ color: "white", fontSize: 45, textAlign: "center" }}
-            >
-              Let's Get in Touch
-            </Typography>
-          </Box>
-
-          <Box className={classes.form}>
-            <form onSubmit={handleSubmit}>
-              <Box className={classes.inp}>
-                <Typography className={classes.label}>Name</Typography>
-                <input
-                  type="text"
-                  name="name"
-                  value={name}
-                  onChange={changeHandler}
-                  placeholder="Enter Your Name"
-                  className={classes.input}
-                />
+      <Grid item container xs={12} md={12} sm={12}>
+        <Box className={classes.container}>
+          <Box className={classes.box}>
+            <Box style={{ marginTop: 30 }}>
+              <Typography className={classes.headerText}>
+                Let's Get in Touch
+              </Typography>
+            </Box>
+            <Grid item container xs={12} md={12} sm={12}>
+              <Box className={classes.form}>
+                <form onSubmit={handleSubmit}>
+                  <Box className={classes.inp}>
+                    <Typography className={classes.label}>Name</Typography>
+                    <input
+                      type="text"
+                      name="name"
+                      value={name}
+                      onChange={changeHandler}
+                      placeholder="Enter Your Name"
+                      className={classes.input}
+                    />
+                  </Box>
+                  <Box className={classes.inp}>
+                    <Typography className={classes.label}>Email</Typography>
+                    <input
+                      type="text"
+                      name="email"
+                      value={email}
+                      onChange={changeHandler}
+                      placeholder="Enter Your Email"
+                      className={classes.input}
+                    />
+                  </Box>
+                  <Box className={classes.inp}>
+                    <Typography className={classes.label}>
+                      Tell Us About Yourself
+                    </Typography>
+                    <textarea
+                      type="text"
+                      name="message"
+                      value={message}
+                      onChange={changeHandler}
+                      placeholder="Enter Your Message"
+                      className={classes.input}
+                    />
+                  </Box>
+                  {error ? (
+                    <>
+                      <Typography
+                        style={{
+                          color: "red",
+                          fontSize: 16,
+                          textAlign: "center",
+                        }}
+                      >
+                        {error}
+                      </Typography>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  <Box className={classes.boxBtn}>
+                    <Button className={classes.btn} onClick={handleSubmit}>
+                      <Typography style={{ color: "white", fontSize: 18 }}>
+                        {loading ? "Submiting..." : "Submit"}
+                      </Typography>
+                    </Button>
+                  </Box>
+                </form>
               </Box>
-              <Box className={classes.inp}>
-                <Typography className={classes.label}>Email</Typography>
-                <input
-                  type="text"
-                  name="email"
-                  value={email}
-                  onChange={changeHandler}
-                  placeholder="Enter Your Email"
-                  className={classes.input}
-                />
-              </Box>
-              <Box className={classes.inp}>
-                <Typography className={classes.label}>
-                  Tell Us About Yourself
-                </Typography>
-                <textarea
-                  type="text"
-                  name="message"
-                  value={message}
-                  onChange={changeHandler}
-                  placeholder="Enter Your Message"
-                  className={classes.input}
-                />
-              </Box>
-              {error ? (
-                <>
-                  <Typography
-                    style={{ color: "red", fontSize: 16, textAlign: "center" }}
-                  >
-                    {error}
-                  </Typography>
-                </>
-              ) : (
-                <></>
-              )}
-              <Box className={classes.boxBtn}>
-                <Button className={classes.btn} onClick={handleSubmit}>
-                  <Typography style={{ color: "white", fontSize: 18 }}>
-                    {loading ? "Submiting..." : "Submit"}
-                  </Typography>
-                </Button>
-              </Box>
-            </form>
+            </Grid>
           </Box>
         </Box>
-      </Box>
+      </Grid>
     </>
   );
 };

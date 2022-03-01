@@ -31,8 +31,8 @@ const BoxBlock = (props) => {
 
   return (
     <>
-      <Grid container className={classes.container}>
-        <Grid item container xs={12} className={classes.box}>
+      <Grid container className={classes.container} xs={12} sm={12} md={5}>
+        <Grid item container xs={12} md={12} sm={12} className={classes.box}>
           <Typography className={classes.header}>{props.title}</Typography>
           <Typography className={classes.descr}>{props.descr}</Typography>
         </Grid>

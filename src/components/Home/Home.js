@@ -6,7 +6,7 @@ import { Box, Typography, Button, makeStyles } from "@material-ui/core";
 import MainComponent from "./MainComponent";
 import Navbar from "../Navigation/Navbar";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
     // maxWidth: "100%",
@@ -29,6 +29,18 @@ const useStyles = makeStyles({
     justifyContent: "center",
     border: "1px solid white",
     borderRadius: "30px",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      border: 0,
+      padding: "0 10px",
+      borderRadius: 0,
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+      border: 0,
+      padding: "0 10px",
+      borderRadius: 0,
+    },
   },
   header: {
     // marginTop: 20,
@@ -54,7 +66,7 @@ const useStyles = makeStyles({
     justifyContent: "center",
     flexDirection: "row",
   },
-});
+}));
 
 const Home = () => {
   const classes = useStyles();

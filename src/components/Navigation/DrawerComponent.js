@@ -18,7 +18,7 @@ const DrawerComponent = () => {
   return (
     <>
       <Drawer
-        anchor="top"
+        anchor="right"
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
       >

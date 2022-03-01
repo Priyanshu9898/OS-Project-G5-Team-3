@@ -4,12 +4,24 @@ import { Link } from "react-router-dom";
 import Navbar from "../Navigation/Navbar";
 import BoxBlock from "./BoxBlock";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
     height: "100vh",
     color: "white",
     padding: "0 150px",
+    [theme.breakpoints.down("md")]: {
+      padding: "0 50px",
+      width: "100%",
+    },
+    [theme.breakpoints.down("sm")]: {
+      padding: "0 35px",
+      width: "100%",
+    },
+    [theme.breakpoints.down("xs")]: {
+      padding: "0 25px",
+      width: "100%",
+    },
   },
   main: {
     // padding: "0 100px",
@@ -20,18 +32,48 @@ const useStyles = makeStyles({
   headerComponent: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
     alignItems: "center",
     marginTop: 60,
   },
   header: {
     width: "65%",
   },
+
+  headerText: {
+    [theme.breakpoints.down("1200")]: {
+      fontSize: 48,
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 40,
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 35,
+    },
+  },
+  title: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 42,
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 38,
+    },
+  },
   imgBox: {
     width: "35%",
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
+
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+      margin: "auto",
+      padding: "0 20px",
+      marginTop: 20,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
   },
   video: {
     backgroundColor: "white",
@@ -47,6 +89,11 @@ const useStyles = makeStyles({
     objectFit: "cover",
     border: "1px solid white",
     borderRadius: "25px",
+
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+      margin: "auto",
+    },
   },
 
   cards: {
@@ -55,7 +102,6 @@ const useStyles = makeStyles({
     // padding: "0 100px",
   },
   btn: {
-    marginTop: 60,
     width: 250,
     height: 50,
 
@@ -63,6 +109,26 @@ const useStyles = makeStyles({
     borderRadius: "30px",
     "&:hover": {
       backgroundColor: "#fa2c2c",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "600px",
+    },
+  },
+  btnComponent2: {
+    marginTop: 60,
+    width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+
+      marginBottom: 20,
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+      marginBottom: 20,
     },
   },
   btn2: {
@@ -91,6 +157,14 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
+
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      textAlign: "center",
+    },
   },
   images: {
     width: "100%",
@@ -98,13 +172,46 @@ const useStyles = makeStyles({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-  },
 
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    [theme.breakpoints.down("xs")]: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  },
+  // iimg: {
+  //   [theme.breakpoints.down("sm")]: {
+  //     width: "100%",
+
+  //   },
+  // },
   algoImages: {
     marginTop: 20,
     marginBottom: 20,
     // border: "1px solid white",
     // borderRadius: "30px",
+    [theme.breakpoints.down("1300")]: {
+      marginLeft: 20,
+    },
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    [theme.breakpoints.down("xs")]: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
   },
   algImg: {
     width: "250px",
@@ -120,7 +227,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     marginBottom: 30,
   },
-});
+}));
 
 const Landing = () => {
   const classes = useStyles();
@@ -129,43 +236,45 @@ const Landing = () => {
       <Navbar />
       <Box className={classes.container}>
         <Box className={classes.main}>
-          <Grid container className={classes.headerComponent}>
-            <Grid item container xs={12}>
+          <Grid container className={classes.headerComponent} xs={12} md={12}>
+            <Grid item container xs={12} md={12}>
               {/* Header content */}
-
-              <Box className={classes.header}>
-                <Typography variant="h2">
-                  Page Replacement Algorithms
-                </Typography>
-                <Typography variant="h6" style={{ marginTop: 30 }}>
-                  When a page fault occurs, the required page has to be brought
-                  from the secondary memory. If all the frames of main memory
-                  are already occupied, then a page has to be replaced. The page
-                  replacement algorithm decides which memory page is to be
-                  replaced.
-                </Typography>
-
-                <Button style={{ color: "white" }} className={classes.btn}>
-                  <Link to="/home" className={classes.link}>
-                    <Typography style={{ color: "white" }}>
-                      Go To Simulator
-                    </Typography>
-                    <img
-                      src="./images/arrow-forward.png"
-                      alt="arrow-forward"
-                      style={{ marginLeft: 10 }}
-                    />
-                  </Link>
-                </Button>
-              </Box>
-
-              <Box className={classes.imgBox}>
-                <img
-                  src="./images/pageReplacement1.png"
-                  alt="OS"
-                  className={classes.img}
-                />
-                {/* <iframe
+              <Grid item xs={12} md={8} className={classes.header}>
+                <Box>
+                  <Typography variant="h2" className={classes.headerText}>
+                    Page Replacement Algorithms
+                  </Typography>
+                  <Typography variant="h6" style={{ marginTop: 30 }}>
+                    When a page fault occurs, the required page has to be
+                    brought from the secondary memory. If all the frames of main
+                    memory are already occupied, then a page has to be replaced.
+                    The page replacement algorithm decides which memory page is
+                    to be replaced.
+                  </Typography>
+                  <Box className={classes.btnComponent2}>
+                    <Button style={{ color: "white" }} className={classes.btn}>
+                      <Link to="/home" className={classes.link}>
+                        <Typography style={{ color: "white" }}>
+                          Go To Simulator
+                        </Typography>
+                        <img
+                          src="./images/arrow-forward.png"
+                          alt="arrow-forward"
+                          style={{ marginLeft: 10 }}
+                        />
+                      </Link>
+                    </Button>
+                  </Box>
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4} className={classes.imgBox}>
+                <Box>
+                  <img
+                    src="./images/pageReplacement1.png"
+                    alt="OS"
+                    className={classes.img}
+                  />
+                  {/* <iframe
                   src="https://www.youtube.com/embed/1DklrGoAxDE"
                   title="YouTube video player"
                   frameborder="0"
@@ -173,7 +282,8 @@ const Landing = () => {
                   allowfullscreen
                   className={classes.video}
                 ></iframe> */}
-              </Box>
+                </Box>
+              </Grid>
             </Grid>
           </Grid>
 
@@ -198,7 +308,7 @@ const Landing = () => {
               />
               <BoxBlock
                 title="What is paging? "
-                descr="Paging is a memory management scheme that eliminates the need for contiguous allocation of physical memory. The mapping from virtual to physical address is done by the memory management unit (MMU) which is a hardware device and this mapping is known as paging technique."
+                descr="Paging is a memory management scheme that eliminates the need for contiguous allocation of physical memory. "
               />
               <BoxBlock
                 title="What is page fault? "
@@ -208,7 +318,7 @@ const Landing = () => {
           </Box>
 
           <Box className={classes.pageAlgo}>
-            <Grid container>
+            <Grid container xs={12} sm={12} md={12}>
               <Box
                 style={{
                   alignText: "center",
@@ -219,48 +329,53 @@ const Landing = () => {
                   marginBottom: 20,
                 }}
               >
-                <Typography style={{ fontSize: 45, alignText: "center" }}>
+                <Typography
+                  style={{ fontSize: 45, alignText: "center" }}
+                  className={classes.title}
+                >
                   The Page Replacement Algorithms
                 </Typography>
               </Box>
-              <Grid item container xs={12} className={classes.images}>
-                <Grid item xs={3}>
-                  <Box className={classes.algoImages}>
-                    <img
-                      src="./images/FCFS.png"
-                      alt="FCFS"
-                      className={classes.algImg}
-                    />
-                  </Box>
+              <Box className={classes.images}>
+                <Grid item container xs={12} md={12} sm={12}>
+                  <Grid item xs={12} md={3} sm={6} className={classes.iimg}>
+                    <Box className={classes.algoImages}>
+                      <img
+                        src="./images/FCFS.png"
+                        alt="FCFS"
+                        className={classes.algImg}
+                      />
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} md={3} sm={6} className={classes.iimg}>
+                    <Box className={classes.algoImages}>
+                      <img
+                        src="./images/OPR.png"
+                        alt="OPR"
+                        className={classes.algImg}
+                      />
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} md={3} sm={6} className={classes.iimg}>
+                    <Box className={classes.algoImages}>
+                      <img
+                        src="./images/LRU.png"
+                        alt="LRU"
+                        className={classes.algImg}
+                      />
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} md={3} sm={6} className={classes.iimg}>
+                    <Box className={classes.algoImages}>
+                      <img
+                        src="./images/MRU.png"
+                        alt="MRU"
+                        className={classes.algImg}
+                      />
+                    </Box>
+                  </Grid>
                 </Grid>
-                <Grid item xs={3}>
-                  <Box className={classes.algoImages}>
-                    <img
-                      src="./images/OPR.png"
-                      alt="OPR"
-                      className={classes.algImg}
-                    />
-                  </Box>
-                </Grid>
-                <Grid item xs={3}>
-                  <Box className={classes.algoImages}>
-                    <img
-                      src="./images/LRU.png"
-                      alt="LRU"
-                      className={classes.algImg}
-                    />
-                  </Box>
-                </Grid>
-                <Grid item xs={3}>
-                  <Box className={classes.algoImages}>
-                    <img
-                      src="./images/MRU.png"
-                      alt="MRU"
-                      className={classes.algImg}
-                    />
-                  </Box>
-                </Grid>
-              </Grid>
+              </Box>
             </Grid>
           </Box>
 
