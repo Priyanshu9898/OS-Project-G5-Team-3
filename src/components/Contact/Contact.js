@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import Navbar from "../Navigation/Navbar";
 import { Box, Typography, makeStyles, Button, Grid } from "@material-ui/core";
+import { db } from "../../firebase";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   container: {
@@ -65,6 +68,7 @@ const useStyles = makeStyles({
 });
 
 const Contact = () => {
+  const navigate = useNavigate();
   const classes = useStyles();
 
   const [data, setData] = useState({
@@ -77,7 +81,7 @@ const Contact = () => {
 
   const { name, email, message, error, loading } = data;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitted");
     setData({ ...data, loading: true, error: false });
@@ -95,10 +99,26 @@ const Contact = () => {
         error: "Please Enter in all fields correctly",
         loading: false,
       });
+    } else {
+      const colref = collection(db, "contact");
+      const newDoc = addDoc(colref, {
+        name,
+        email,
+        message,
+        createdAt: Timestamp.fromDate(new Date()),
+      });
+
+      console.log(newDoc);
+
+      setData({
+        email: "",
+        name: "",
+        message: "",
+        error: null,
+        loading: false,
+      });
+      navigate("/");
     }
-    
-
-
   };
 
   const changeHandler = (e) => {
