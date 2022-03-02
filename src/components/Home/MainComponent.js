@@ -27,11 +27,14 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 10,
   },
   input: {
-    fontSize: 16,
+    fontSize: 20,
     height: 30,
     borderRadius: 5,
     padding: "0 10px",
+    height: 40,
+
     color: "black",
+    border: "1px solid #red",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
@@ -48,6 +51,11 @@ const useStyles = makeStyles((theme) => ({
   },
   btn: {
     marginRight: 30,
+    backgroundColor: "#f15550",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#fa2c2c",
+    },
   },
   errorMsg: {
     color: "#ff3030",
@@ -156,37 +164,16 @@ const MainComponent = () => {
           <></>
         )}
         <Box className={classes.btns}>
-          <Button
-            className={classes.btn}
-            variant="contained"
-            color="primary"
-            onClick={Fifo}
-          >
+          <Button className={classes.btn} onClick={Fifo}>
             FCFS
           </Button>
-          <Button
-            className={classes.btn}
-            variant="contained"
-            color="primary"
-            onClick={LRU}
-          >
+          <Button className={classes.btn} onClick={LRU}>
             LRU
           </Button>
-          <Button
-            className={classes.btn}
-            variant="contained"
-            color="primary"
-            onClick={MRU}
-          >
+          <Button className={classes.btn} onClick={MRU}>
             MRU
           </Button>
-          <Button
-            className={classes.btn}
-            variant="contained"
-            color="primary"
-            onClick={OPR}
-            onSubmit={handleSubmit}
-          >
+          <Button className={classes.btn} onClick={OPR}>
             opr
           </Button>
         </Box>

@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
     width: 600,
     height: "69vh",
     border: "1px solid white",
-    borderRadius: "30px",
+    borderRadius: "25px",
+    backgroundColor: "#1a202c",
     [theme.breakpoints.down("md")]: {
       width: "600",
       height: "80vh",

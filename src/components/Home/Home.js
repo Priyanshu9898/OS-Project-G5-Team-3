@@ -28,7 +28,12 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     border: "1px solid white",
-    borderRadius: "30px",
+    borderRadius: "25px",
+    backgroundColor: "#1a202c",
+    [theme.breakpoints.between("1200", "1400")]: {
+      width: "800",
+      height: "80vh",
+    },
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       border: 0,
