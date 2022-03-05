@@ -69,7 +69,7 @@ const About = () => {
                 </a>
 
                 <a
-                  href="#"
+                  href="https://github.com/Priyanshu9898"
                   class="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white"
                   aria-label="Github"
                 >
@@ -257,7 +257,7 @@ const About = () => {
                 </a>
 
                 <a
-                  href="https://github.com/"
+                  href="https://github.com/devcodes9"
                   class="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white"
                   aria-label="Github"
                 >
@@ -320,7 +320,7 @@ const About = () => {
                 </a>
 
                 <a
-                  href="#"
+                  href="https://github.com/Shubh-Kapadia"
                   class="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white"
                   aria-label="Github"
                 >

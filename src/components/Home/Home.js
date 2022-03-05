@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Box, Typography, Button, makeStyles } from "@material-ui/core";
-
+import FIFO from "../Algorithms/FIFO";
 // Components
-import MainComponent from "./MainComponent";
+
 import Navbar from "../Navigation/Navbar";
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     color: "white",
   },
-  box: {
+  box1: {
     marginTop: 60,
     width: 800,
     height: "60vh",
@@ -51,30 +51,128 @@ const useStyles = makeStyles((theme) => ({
     // marginTop: 20,
     marginBottom: 15,
   },
-  description: {
-    marginBottom: 15,
-    color: "rgb(156 163 175)",
-  },
-  btnInfo: {
+
+  // Main Component
+  inputBox: {
     display: "flex",
+    flexDirection: "column",
     marginTop: 15,
+    marginBottom: 15,
+    width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      // padding: "0 10px",
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+      // padding: "0 10px",
+    },
   },
-  info: {
-    color: "#f15550",
+
+  lable: {
+    fontSize: 24,
     marginBottom: 10,
   },
-  btn: {
-    // backgroundColor: "#f15550",
-    color: "white",
+  input: {
+    fontSize: 20,
+    height: 30,
+    borderRadius: 5,
+    padding: "0 10px",
+    height: 40,
+
+    color: "black",
+    border: "1px solid #red",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
+  },
+
+  btns: {
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
     flexDirection: "row",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  btn: {
+    marginRight: 30,
+    backgroundColor: "#f15550",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#fa2c2c",
+    },
+  },
+  errorMsg: {
+    color: "#ff3030",
   },
 }));
 
 const Home = () => {
   const classes = useStyles();
+
+  const [frame, setFrame] = useState(0);
+  const [page, setPage] = useState(0);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [seq, setSeq] = useState([]);
+  const [result, setResult] = useState("");
+  const [seqArr, setSeqArr] = useState([]);
+
+  const frameHanadler = (e) => {
+    setFrame(e.target.value);
+  };
+
+  const pageHanadler = (e) => {
+    setPage(e.target.value);
+  };
+
+  const seqHandler = (e) => {
+    setSeq(e.target.value);
+    let arr = e.target.value.split(" ");
+    setSeqArr(arr);
+    console.log(seqArr);
+  };
+
+  // const inputChecker = (e) => {};
+
+  const handleClickFcfs = async (e) => {
+    console.log("FIFO");
+
+    if (frame < 0 || page < 0) {
+      setError("Frames and Pages can not be Negative");
+      setLoading(true);
+    } else if (frame === 0 || page === 0 || seq.length === 0) {
+      setError("Please fill all the fields");
+      setLoading(true);
+    } else {
+      try {
+        if (seqArr.length !== page) {
+          setError("Please enter the correct number of page sequence");
+        }
+        setError(null);
+        setLoading(false);
+        setResult("fifo");
+      } catch (e) {}
+    }
+  };
+  const handleClickLru = () => {
+    setResult("lru");
+  };
+  const handleClickMru = () => {
+    setResult("mru");
+  };
+  const handleClickOpr = () => {
+    setResult("opr");
+  };
+
+  const buttons = [
+    { key: 1, title: "FCFS", func: handleClickFcfs },
+    { key: 2, title: "OPR", func: handleClickOpr },
+    { key: 3, title: "LRU", func: handleClickLru },
+    { key: 4, title: "MRU", func: handleClickMru },
+  ];
 
   const handleInfoButton = () => {
     console.log("Info button clicked");
@@ -87,37 +185,105 @@ const Home = () => {
 
       <Box className={classes.container}>
         {/* Header  */}
-        <Box className={classes.box}>
+        <Box className={classes.box1}>
           <Box className={classes.header}>
             <Typography variant="h3">
               {/* Page Replacement Algorithm */}
               Simulator
             </Typography>
           </Box>
-          {/* <hr /> */}
-          {/* Discription Starts from here(Optional) */}
-          {/* <Box className={classes.description}>
-          <Typography variant="h6">
-            The page replacement algorithm decides which memory page is to be
-            replaced. The process of replacement is sometimes called swap out or
-            write to disk. Page replacement is done when the requested page is
-            not found in the main memory (page fault).
-          </Typography>
-          <Box className={classes.btnInfo}>
-            {/* <Typography className={classes.info}>
-              Want to learn more?? Click Button below
-            </Typography> *
-            <Link to="/blog" className={classes.btn}>
-              <Typography>Learn More</Typography>
-              <img src="./images/arrow-forward.png" alt="arrow" />
-            </Link>
-          </Box> */}
-          {/* </Box> */}
-          {/* <hr /> */}
 
           {/* Main Component */}
-          <MainComponent />
+          <Box className={classes.mainComponent}>
+            <form>
+              <Box className={classes.inputBox}>
+                <Typography variant="h6" className={classes.label}>
+                  Enter Number of Frames
+                </Typography>
+                <input
+                  type="number"
+                  className={classes.input}
+                  id="frame"
+                  name="frame"
+                  value={frame}
+                  onChange={frameHanadler}
+                />
+              </Box>
+              <Box className={classes.inputBox}>
+                <Typography variant="h6" className={classes.label}>
+                  Enter Number of Pages
+                </Typography>
+                <input
+                  type="number"
+                  className={classes.input}
+                  id="page"
+                  name="page"
+                  value={page}
+                  onChange={pageHanadler}
+                />
+              </Box>
+              {page > 0 ? (
+                <>
+                  <Box className={classes.inputBox}>
+                    <Typography variant="h6" className={classes.label}>
+                      Enter The Page Sequence
+                    </Typography>
+
+                    <input
+                      type="text"
+                      className={classes.input}
+                      id="seq"
+                      name="seq"
+                      value={seq}
+                      onChange={seqHandler}
+                    />
+                  </Box>
+                </>
+              ) : (
+                <></>
+              )}
+
+              <Box className={classes.btns}>
+                {buttons.map((btn, index) => {
+                  return (
+                    <>
+                      <Button
+                        key={btn.key}
+                        className={classes.btn}
+                        onClick={btn.func}
+                      >
+                        {btn.title}
+                      </Button>
+                    </>
+                  );
+                })}
+              </Box>
+
+              {error ? (
+                <>
+                  <p className={classes.errorMsg}>{error}</p>
+                </>
+              ) : (
+                <></>
+              )}
+
+              {/* <hr /> */}
+            </form>
+          </Box>
         </Box>
+
+        {/* Result */}
+
+        <Box className={classes.result}></Box>
+
+        {/* Result ends here */}
+        {result === "fifo" ? (
+          <>
+            <FIFO frame={frame} page={page} seq={seqArr} mainSeq={seq} />
+          </>
+        ) : (
+          <> </>
+        )}
       </Box>
     </>
   );

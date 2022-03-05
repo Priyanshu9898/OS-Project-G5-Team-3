@@ -8,6 +8,7 @@ import Blog from "./components/Blog/Blog";
 import Landing from "./components/LandingPage/Landing";
 import Contact from "./components/Contact/Contact";
 import Algos from "./components/AlgoBlog/Algos";
+
 const App = () => {
   return (
     <>
