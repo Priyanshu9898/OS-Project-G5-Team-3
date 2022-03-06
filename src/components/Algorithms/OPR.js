@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Typography, makeStyles } from "@material-ui/core";
-import TableHeader from "./TableHeader";
 import PieChart from "./PieChart";
+import TableHeader from "./TableHeader";
+
 const useStyles = makeStyles({
   table: {
     width: "100%",
@@ -45,8 +46,9 @@ const useStyles = makeStyles({
   },
 });
 
-const FIFO = (props) => {
+const OPR = (props) => {
   const classes = useStyles();
+
   const pages = props.page;
   const frames = props.frame;
 
@@ -71,44 +73,97 @@ const FIFO = (props) => {
       </>
     );
   };
-
-  const fifoResultGiver = (page, frame, seq) => {
-    let pageFaults = 0;
-
-    let temp = [frame];
-
+  const oprResultMaker = (page, frame, seq) => {
+    console.log("OPR Result Maker");
+    let temp = [];
+    let flag1;
+    let flag2;
+    let flag3;
+    let pos;
+    let max;
+    let faults = 0;
     let result = [];
-    for (let i = 0; i < frame; i++) {
-      temp[i] = -1;
+    let frame_arr = [];
+    let hit;
+    let fault;
+
+    for (let i = 0; i < frames; i++) {
+      frame_arr[i] = -1;
     }
 
-    for (let i = 0; i < seq.length; i++) {
-      let hit = false;
-      let fault = false;
-      let flag = 0;
+    console.log(frame_arr);
+
+    for (let i = 0; i < page; i++) {
+      flag1 = 0;
+      flag2 = 0;
+      hit = false;
+      fault = false;
 
       for (let j = 0; j < frame; j++) {
-        if (seq[i] === temp[j]) {
-          flag++;
-          pageFaults--;
+        if (seq[i] === frame_arr[j]) {
+          flag1 = 1;
+          flag2 = 1;
           hit = true;
+          break;
         }
       }
-      pageFaults++;
-      fault = true;
-      if (pageFaults <= frame && flag === 0) {
-        temp[i] = seq[i];
-      } else if (flag === 0) {
-        let pageHitAndPageRatio = (pageFaults - 1) % frame;
-        temp[pageHitAndPageRatio] = seq[i];
+
+      if (flag1 === 0) {
+        for (let j = 0; j < frame; j++) {
+          if (frame_arr[j] === -1) {
+            faults++;
+            frame_arr[j] = seq[i];
+            flag2 = 1;
+            fault = true;
+            break;
+          }
+        }
+      }
+
+      if (flag2 === 0) {
+        flag3 = 0;
+
+        for (let j = 0; j < frame; j++) {
+          temp[j] = -1;
+          for (let k = i + 1; k < page; k++) {
+            if (frame_arr[j] === seq[k]) {
+              temp[j] = k;
+              // console.log(frame_arr[j], seq[k], temp[j]);
+              break;
+            }
+          }
+        }
+
+        console.log("temp ", temp);
+
+        for (let j = 0; j < frame; j++) {
+          if (temp[j] === -1) {
+            pos = j;
+            flag3 = 1;
+            break;
+          }
+        }
+
+        if (flag3 === 0) {
+          max = temp[0];
+          pos = 0;
+
+          for (let j = 1; j < frame; j++) {
+            if (temp[j] > max) {
+              max = temp[j];
+              pos = j;
+            }
+          }
+        }
+        frame_arr[pos] = seq[i];
+        faults++;
+        fault = true;
       }
 
       let elements = [];
-
       elements.push(`P${i + 1}   (${seq[i]})`);
-      //printing elements
       for (let j = 0; j < frame; j++) {
-        elements.push(temp[j]);
+        elements.push(frame_arr[j]);
       }
       if (hit === true) {
         elements.push("HIT");
@@ -120,17 +175,14 @@ const FIFO = (props) => {
       console.log("\t");
       result.push(elements);
     }
-
-    console.log("Total Page Faults: ", pageFaults);
-
     console.log(result);
+    console.log("Total Page Faults : ", faults);
 
-    return { result, pageFaults };
+    return { result, faults };
   };
 
-  const rowResultMaker = (pages, frames, pageSeq) => {
-    let { result, pageFaults } = fifoResultGiver(pages, frames, pageSeq);
-    console.log(result, pageFaults);
+  const rowResultMaker = (page, frame, seq) => {
+    const { result } = oprResultMaker(page, frame, seq);
     return (
       <>
         {result.map((item, index) => {
@@ -146,15 +198,16 @@ const FIFO = (props) => {
     );
   };
 
-  const { pageFaults } = fifoResultGiver(pages, frames, pageSeq);
-  const pageHits = pages - pageFaults;
+  const { faults } = oprResultMaker(pages, frames, pageSeq);
+  const pageHits = pages - faults;
+
   return (
     <>
       <TableHeader
         // page={props.page}
         // frame={props.frame}
         // pageSeq={props.mainSeq}
-        algoName={"FCFS (First Come First Serve)"}
+        algoName={"OPR (Optimal Page Replacement)"}
       />
 
       <Box className={classes.table}>
@@ -199,12 +252,12 @@ const FIFO = (props) => {
               Page Hit: {pageHits}
             </Typography>
             <Typography className={classes.sumText}>
-              Page Faults: {pageFaults}
+              Page Faults: {faults}
             </Typography>
           </Box>
 
           <Box className={classes.chart}>
-            <PieChart hit={pageHits} fault={pageFaults} />
+            <PieChart hit={pageHits} fault={faults} />
           </Box>
         </Box>
       </Box>
@@ -212,4 +265,4 @@ const FIFO = (props) => {
   );
 };
 
-export default FIFO;
+export default OPR;

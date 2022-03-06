@@ -38,10 +38,12 @@ const PieChart = (props) => {
       color: "#fff",
       fontSize: 24,
     },
+
     pieSliceTextStyle: {
-      color: "#fff",
+      color: "black",
       fontSize: 24,
     },
+    slices: { 0: { color: "#7C99AC" }, 1: { color: "#FFCDDD" } },
   };
 
   return (

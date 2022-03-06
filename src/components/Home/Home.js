@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Box, Typography, Button, makeStyles } from "@material-ui/core";
 import FIFO from "../Algorithms/FIFO";
+import OPR from "../Algorithms/OPR";
+import LRU from "../Algorithms/LRU";
+import MRU from "../Algorithms/MRU";
 // Components
 
 import Navbar from "../Navigation/Navbar";
@@ -158,13 +161,70 @@ const Home = () => {
     }
   };
   const handleClickLru = () => {
-    setResult("lru");
+    console.log("LRU");
+    if (frame < 0 || page < 0) {
+      setError("Frames and Pages can not be Negative");
+      setLoading(true);
+    } else if (frame === 0 || page === 0 || seq.length === 0) {
+      setError("Please fill all the fields");
+      setLoading(true);
+    } else {
+      try {
+        if (seqArr.length !== page) {
+          setError("Please enter the correct number of page sequence");
+        }
+        setError(null);
+        setLoading(false);
+        setResult("lru");
+      } catch (e) {}
+    }
   };
   const handleClickMru = () => {
-    setResult("mru");
+    console.log("MRU");
+    if (frame < 0 || page < 0) {
+      setError("Frames and Pages can not be Negative");
+      setLoading(true);
+    } else if (frame === 0 || page === 0 || seq.length === 0) {
+      setError("Please fill all the fields");
+      setLoading(true);
+    } else {
+      try {
+        if (seqArr.length !== page) {
+          setError("Please enter the correct number of page sequence");
+        }
+        setError(null);
+        setLoading(false);
+        setResult("mru");
+      } catch (e) {}
+    }
   };
   const handleClickOpr = () => {
-    setResult("opr");
+    console.log("OPR");
+
+    if (frame < 0 || page < 0) {
+      setError("Frames and Pages can not be Negative");
+      setLoading(true);
+    } else if (frame === 0 || page === 0 || seq.length === 0) {
+      setError("Please fill all the fields");
+      setLoading(true);
+    } else {
+      try {
+        if (seqArr.length !== page) {
+          setError("Please enter the correct number of page sequence");
+        }
+        setError(null);
+        setLoading(false);
+        setResult("opr");
+      } catch (e) {}
+    }
+  };
+
+  const handleReset = () => {
+    console.log("RESET");
+    setFrame(0);
+    setPage(0);
+    setSeq("");
+    setResult("none");
   };
 
   const buttons = [
@@ -172,6 +232,7 @@ const Home = () => {
     { key: 2, title: "OPR", func: handleClickOpr },
     { key: 3, title: "LRU", func: handleClickLru },
     { key: 4, title: "MRU", func: handleClickMru },
+    { key: 5, title: "RESET", func: handleReset },
   ];
 
   const handleInfoButton = () => {
@@ -282,7 +343,28 @@ const Home = () => {
             <FIFO frame={frame} page={page} seq={seqArr} mainSeq={seq} />
           </>
         ) : (
-          <> </>
+          <></>
+        )}
+        {result === "opr" ? (
+          <>
+            <OPR frame={frame} page={page} seq={seqArr} mainSeq={seq} />
+          </>
+        ) : (
+          <></>
+        )}
+        {result === "lru" ? (
+          <>
+            <LRU frame={frame} page={page} seq={seqArr} mainSeq={seq} />
+          </>
+        ) : (
+          <></>
+        )}
+        {result === "mru" ? (
+          <>
+            <MRU frame={frame} page={page} seq={seqArr} mainSeq={seq} />
+          </>
+        ) : (
+          <></>
         )}
       </Box>
     </>
