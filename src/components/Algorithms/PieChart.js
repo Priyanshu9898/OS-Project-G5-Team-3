@@ -2,7 +2,7 @@ import React from "react";
 import Chart from "react-google-charts";
 import { Box, Typography, makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   graph: {
     width: "100%",
     marginTop: 30,
@@ -11,12 +11,20 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 20,
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+      padding: "0 10px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      padding: "0 10px",
+    },
   },
   header: {
     marginBottom: 15,
     fontSize: 45,
   },
-});
+}));
 
 const PieChart = (props) => {
   const classes = useStyles();

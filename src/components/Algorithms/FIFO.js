@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, Typography, makeStyles } from "@material-ui/core";
 import TableHeader from "./TableHeader";
 import PieChart from "./PieChart";
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
     width: "100%",
 
@@ -15,6 +15,11 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 12,
+      width: "100%",
+      padding: "0 10px",
+    },
   },
   result: {
     "& tr:nth-child(even)": {
@@ -43,7 +48,7 @@ const useStyles = makeStyles({
     fontSize: 30,
     textAlign: "left",
   },
-});
+}));
 
 const FIFO = (props) => {
   const classes = useStyles();

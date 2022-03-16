@@ -74,6 +74,7 @@ const OPR = (props) => {
     );
   };
   const oprResultMaker = (page, frame, seq) => {
+    
     console.log("OPR Result Maker");
     let temp = [];
     let flag1;
@@ -91,7 +92,7 @@ const OPR = (props) => {
       frame_arr[i] = -1;
     }
 
-    console.log(frame_arr);
+
 
     for (let i = 0; i < page; i++) {
       flag1 = 0;
@@ -121,14 +122,18 @@ const OPR = (props) => {
       }
 
       if (flag2 === 0) {
+
         flag3 = 0;
 
         for (let j = 0; j < frame; j++) {
+
           temp[j] = -1;
+
           for (let k = i + 1; k < page; k++) {
+
             if (frame_arr[j] === seq[k]) {
               temp[j] = k;
-              // console.log(frame_arr[j], seq[k], temp[j]);
+             
               break;
             }
           }

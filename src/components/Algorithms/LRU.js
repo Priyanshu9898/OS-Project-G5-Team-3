@@ -117,7 +117,7 @@ const LRU = (props) => {
       for (let j = 0; j < frame; j++) {
         if (seq[i] === frame_arr[j]) {
           counter++;
-          temp[j] = counter;
+
           flag1 = 1;
           flag2 = 1;
           hit = true;
@@ -227,7 +227,7 @@ const LRU = (props) => {
             <Typography className={classes.header}>Summary</Typography>
           </Box>
           <Box className={classes.sum}>
-          <Typography className={classes.sumText}>
+            <Typography className={classes.sumText}>
               Total Frames: {props.frame}
             </Typography>
             <Typography className={classes.sumText}>

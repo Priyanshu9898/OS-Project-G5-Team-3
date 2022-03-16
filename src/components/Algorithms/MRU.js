@@ -59,6 +59,8 @@ const MRU = (props) => {
     arr.push(i + 1);
   }
 
+  // For creating frames
+
   const frameCreator = (f) => {
     return (
       <>
@@ -74,9 +76,11 @@ const MRU = (props) => {
     );
   };
 
+  
+
   const mruResultMaker = (page, frame, seq) => {
     console.log("MRU Result Maker");
-    let temp = [];
+
     let flag1;
     let flag2;
 
@@ -213,7 +217,7 @@ const MRU = (props) => {
             <Typography className={classes.header}>Summary</Typography>
           </Box>
           <Box className={classes.sum}>
-          <Typography className={classes.sumText}>
+            <Typography className={classes.sumText}>
               Total Frames: {props.frame}
             </Typography>
             <Typography className={classes.sumText}>

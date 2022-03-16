@@ -125,17 +125,34 @@ const Home = () => {
 
   const frameHanadler = (e) => {
     setFrame(e.target.value);
+    if (Number.isInteger(e.target.value)) {
+      setError(null);
+    } else {
+      setError("Please enter a valid positive integer");
+    }
   };
 
   const pageHanadler = (e) => {
     setPage(e.target.value);
+    if (Number.isInteger(parseInt(e.target.value))) {
+      setError(null);
+    } else {
+      setError("Please enter a valid positive integer");
+    }
   };
 
   const seqHandler = (e) => {
     setSeq(e.target.value);
-    let arr = e.target.value.split(" ");
+
+    let Text = e.target.value;
+    Text = Text.replace(/ {1,}/g, " ");
+    Text = Text.trim();
+
+    let arr = Text.split(" ");
+
     setSeqArr(arr);
-    console.log(seqArr);
+    // setError(null);
+    console.log("main seq arr ", seqArr);
   };
 
   // const inputChecker = (e) => {};
@@ -145,37 +162,63 @@ const Home = () => {
 
     if (frame < 0 || page < 0) {
       setError("Frames and Pages can not be Negative");
-      setLoading(true);
     } else if (frame === 0 || page === 0 || seq.length === 0) {
       setError("Please fill all the fields");
-      setLoading(true);
     } else {
       try {
-        if (seqArr.length !== page) {
-          setError("Please enter the correct number of page sequence");
+        // if (seqArr.length !== page) {
+        //   setError("Please enter the correct number of page sequence");
+        // }
+
+        let isNeagtive = false;
+        for (let i = 0; i < seqArr.length; i++) {
+          if (parseInt(seqArr[i]) < 0) {
+            isNeagtive = true;
+            break;
+          }
         }
-        setError(null);
-        setLoading(false);
-        setResult("fifo");
+
+        if (isNeagtive) {
+          setError(
+            "Negative number and float number is not allowed in Page Sequence"
+          );
+        } else {
+          setError(null);
+          setResult("fifo");
+        }
       } catch (e) {}
     }
   };
+
   const handleClickLru = () => {
     console.log("LRU");
     if (frame < 0 || page < 0) {
       setError("Frames and Pages can not be Negative");
-      setLoading(true);
     } else if (frame === 0 || page === 0 || seq.length === 0) {
       setError("Please fill all the fields");
-      setLoading(true);
     } else {
       try {
-        if (seqArr.length !== page) {
-          setError("Please enter the correct number of page sequence");
+        // if (seqArr.length !== page) {
+        //   setError("Please enter the correct number of page sequence");
+        // }
+
+        let isNeagtive = false;
+
+        for (let i = 0; i < seqArr.length; i++) {
+          if (parseInt(seqArr[i]) < 0) {
+            isNeagtive = true;
+            break;
+          }
         }
-        setError(null);
-        setLoading(false);
-        setResult("lru");
+
+        if (isNeagtive) {
+          setError(
+            "Negative number and float number is not allowed in Page Sequence"
+          );
+        } else {
+          setError(null);
+          setResult("lru");
+        }
       } catch (e) {}
     }
   };
@@ -183,38 +226,66 @@ const Home = () => {
     console.log("MRU");
     if (frame < 0 || page < 0) {
       setError("Frames and Pages can not be Negative");
-      setLoading(true);
     } else if (frame === 0 || page === 0 || seq.length === 0) {
       setError("Please fill all the fields");
-      setLoading(true);
     } else {
       try {
-        if (seqArr.length !== page) {
-          setError("Please enter the correct number of page sequence");
+        // if (seqArr.length !== page) {
+        //   setError("Please enter the correct number of page sequence");
+        // }
+
+        let isNeagtive = false;
+        for (let i = 0; i < seqArr.length; i++) {
+          if (parseInt(seqArr[i]) < 0) {
+            isNeagtive = true;
+            break;
+          }
         }
-        setError(null);
-        setLoading(false);
-        setResult("mru");
+
+        if (isNeagtive) {
+          setError(
+            "Negative number and float number is not allowed in Page Sequence"
+          );
+        } else {
+          setError(null);
+          setResult("mru");
+        }
       } catch (e) {}
     }
   };
+
   const handleClickOpr = () => {
     console.log("OPR");
 
     if (frame < 0 || page < 0) {
       setError("Frames and Pages can not be Negative");
-      setLoading(true);
     } else if (frame === 0 || page === 0 || seq.length === 0) {
       setError("Please fill all the fields");
-      setLoading(true);
     } else {
       try {
-        if (seqArr.length !== page) {
-          setError("Please enter the correct number of page sequence");
+        // if (seqArr.length !== page) {
+        //   setError("Please enter the correct number of page sequence");
+        // }
+
+        let isNeagtive = false;
+
+        for (let i = 0; i < seqArr.length; i++) {
+          if (parseInt(seqArr[i]) < 0) {
+            isNeagtive = true;
+            break;
+          }
         }
-        setError(null);
-        setLoading(false);
-        setResult("opr");
+
+        let len = seqArr.length === page;
+
+        if (isNeagtive) {
+          setError(
+            "Negative number and float number is not allowed in Page Sequence"
+          );
+        } else {
+          setError(null);
+          setResult("opr");
+        }
       } catch (e) {}
     }
   };
@@ -225,6 +296,7 @@ const Home = () => {
     setPage(0);
     setSeq("");
     setResult("none");
+    setError(null);
   };
 
   const buttons = [
@@ -338,7 +410,7 @@ const Home = () => {
         <Box className={classes.result}></Box>
 
         {/* Result ends here */}
-        {result === "fifo" ? (
+        {result === "fifo" && error === null ? (
           <>
             <FIFO frame={frame} page={page} seq={seqArr} mainSeq={seq} />
           </>
