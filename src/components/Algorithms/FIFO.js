@@ -77,24 +77,36 @@ const FIFO = (props) => {
     );
   };
 
+  // Fifo algo code
+
+  // Time complexity = O(page * frame)
+  // Space Complexity = O(page)
+
   const fifoResultGiver = (page, frame, seq) => {
     let pageFaults = 0;
 
     let temp = [frame];
 
     let result = [];
+    let index_arr = [];
+
+    // Initialize every element to 1
+
     for (let i = 0; i < frame; i++) {
       temp[i] = -1;
     }
 
+    // Iterate through sequence
     for (let i = 0; i < seq.length; i++) {
       let hit = false;
       let fault = false;
       let flag = 0;
 
+      // Check if the element is in current array
       for (let j = 0; j < frame; j++) {
         if (seq[i] === temp[j]) {
           flag++;
+          index_arr.push(j);
           pageFaults--;
           hit = true;
         }
@@ -103,11 +115,14 @@ const FIFO = (props) => {
       fault = true;
       if (pageFaults <= frame && flag === 0) {
         temp[i] = seq[i];
+        index_arr.push(i);
       } else if (flag === 0) {
         let pageHitAndPageRatio = (pageFaults - 1) % frame;
         temp[pageHitAndPageRatio] = seq[i];
+        index_arr.push(pageHitAndPageRatio);
       }
 
+      // Initialize array and push every elements of our current array
       let elements = [];
 
       elements.push(`P${i + 1}   (${seq[i]})`);
@@ -120,29 +135,75 @@ const FIFO = (props) => {
       } else if (fault === true) {
         elements.push("FAULT");
       }
-      console.log(elements);
 
-      console.log("\t");
       result.push(elements);
     }
 
-    console.log("Total Page Faults: ", pageFaults);
-
-    console.log(result);
-
-    return { result, pageFaults };
+    return { result, pageFaults, index_arr };
   };
 
+  // Row maker
+
   const rowResultMaker = (pages, frames, pageSeq) => {
-    let { result, pageFaults } = fifoResultGiver(pages, frames, pageSeq);
-    console.log(result, pageFaults);
+    const { result, index_arr } = fifoResultGiver(pages, frames, pageSeq);
+  
+
     return (
       <>
         {result.map((item, index) => {
+          let lastEle = item[item.length - 1];
+
           return (
             <tr>
-              {item.map((i, index) => {
-                return <td className={classes.main}>{i}</td>;
+              {item.map((i, ind) => {
+                return (
+                  <>
+                    {ind !== index_arr[index] + 1 ? (
+                      <>
+                        <td
+                          className={classes.main}
+                          style={{
+                            backgroundColor: `${
+                              ind !== item.length - 1
+                                ? "inherit"
+                                : lastEle === "HIT"
+                                ? "rgb(105 228 0 / 86%)"
+                                : "#fa2c2c"
+                            }`,
+                          }}
+                        >
+                          {i}
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        {lastEle === "HIT" ? (
+                          <>
+                            <td
+                              className={classes.main}
+                              style={{
+                                backgroundColor: "rgb(40 226 63 / 67%)",
+                              }}
+                            >
+                              {i}
+                            </td>
+                          </>
+                        ) : (
+                          <>
+                            <td
+                              className={classes.main}
+                              style={{
+                                backgroundColor: "rgb(248 85 85 / 95%)",
+                              }}
+                            >
+                              {i}
+                            </td>
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                );
               })}
             </tr>
           );

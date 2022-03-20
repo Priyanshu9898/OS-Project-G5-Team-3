@@ -55,12 +55,9 @@ const MRU = (props) => {
   const pageSeq = props.seq;
 
   let arr = [];
-  for (let i = 0; i < frames; i++) {
-    arr.push(i + 1);
-  }
+  for (let i = 0; i < frames; i++) arr.push(i + 1);
 
   // For creating frames
-
   const frameCreator = (f) => {
     return (
       <>
@@ -76,8 +73,9 @@ const MRU = (props) => {
     );
   };
 
-  
-
+  // MRU Result Maker
+  // Time complexity = O(page * frame)
+  // Space Complexity = O(page)
   const mruResultMaker = (page, frame, seq) => {
     console.log("MRU Result Maker");
 
@@ -91,28 +89,30 @@ const MRU = (props) => {
     let frame_arr = [];
     let hit;
     let fault;
+    let index_arr = [];
 
-    for (let i = 0; i < frames; i++) {
-      frame_arr[i] = -1;
-    }
+    // declaring every element -1
+    for (let i = 0; i < frames; i++) frame_arr[i] = -1;
 
-    console.log(frame_arr);
-
+    // for every page in sequence
     for (let i = 0; i < page; i++) {
       flag1 = 0;
       flag2 = 0;
       hit = false;
       fault = false;
 
+      //  if page already available in frame_arr
       for (let j = 0; j < frame; j++) {
         if (seq[i] === frame_arr[j]) {
           flag1 = 1;
           flag2 = 1;
           hit = true;
+          index_arr.push(j);
           break;
         }
       }
 
+      //  if frame_arr contains -1
       if (flag1 === 0) {
         for (let j = 0; j < frame; j++) {
           if (frame_arr[j] === -1) {
@@ -120,11 +120,13 @@ const MRU = (props) => {
             frame_arr[j] = seq[i];
             fault = true;
             flag2 = 1;
+            index_arr.push(j);
             break;
           }
         }
       }
 
+      // For finding position of element which is most recently used
       if (flag2 === 0) {
         let prev = seq[i - 1];
         for (let j = 0; j < frame; j++) {
@@ -136,38 +138,85 @@ const MRU = (props) => {
         faults++;
         fault = true;
         frame_arr[pos] = seq[i];
+        index_arr.push(pos);
       }
 
+      // Push all elements into frame_arr array
       let elements = [];
       elements.push(`P${i + 1}   (${seq[i]})`);
-      for (let j = 0; j < frame; j++) {
-        elements.push(frame_arr[j]);
-      }
-      if (hit === true) {
-        elements.push("HIT");
-      } else if (fault === true) {
-        elements.push("FAULT");
-      }
-      console.log(elements);
 
-      console.log("\t");
+      for (let j = 0; j < frame; j++) elements.push(frame_arr[j]);
+
+      if (hit === true) elements.push("HIT");
+      else if (fault === true) elements.push("FAULT");
+
       result.push(elements);
     }
-    console.log(result);
-    console.log("Total Page Faults : ", faults);
 
-    return { result, faults };
+    return { result, faults, index_arr };
   };
 
+  // Creating row for table
   const rowResultMaker = (page, frame, seq) => {
-    const { result } = mruResultMaker(page, frame, seq);
+    const { result, index_arr } = mruResultMaker(page, frame, seq);
+   
+   
     return (
       <>
         {result.map((item, index) => {
+          let lastEle = item[item.length - 1];
+
           return (
             <tr>
-              {item.map((i, index) => {
-                return <td className={classes.main}>{i}</td>;
+              {item.map((i, ind) => {
+                return (
+                  <>
+                    {ind !== index_arr[index] + 1 ? (
+                      <>
+                        <td
+                          className={classes.main}
+                          style={{
+                            backgroundColor: `${
+                              ind !== item.length - 1
+                                ? "inherit"
+                                : lastEle === "HIT"
+                                ? "rgb(105 228 0 / 86%)"
+                                : "#fa2c2c"
+                            }`,
+                          }}
+                        >
+                          {i}
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        {lastEle === "HIT" ? (
+                          <>
+                            <td
+                              className={classes.main}
+                              style={{
+                                backgroundColor: "rgb(40 226 63 / 67%)",
+                              }}
+                            >
+                              {i}
+                            </td>
+                          </>
+                        ) : (
+                          <>
+                            <td
+                              className={classes.main}
+                              style={{
+                                backgroundColor: "rgb(248 85 85 / 95%)",
+                              }}
+                            >
+                              {i}
+                            </td>
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                );
               })}
             </tr>
           );

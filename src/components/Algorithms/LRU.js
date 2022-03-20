@@ -55,9 +55,7 @@ const LRU = (props) => {
   const pageSeq = props.seq;
 
   let arr = [];
-  for (let i = 0; i < frames; i++) {
-    arr.push(i + 1);
-  }
+  for (let i = 0; i < frames; i++) arr.push(i + 1);
 
   const frameCreator = (f) => {
     return (
@@ -74,6 +72,7 @@ const LRU = (props) => {
     );
   };
 
+  // To find least recently used element's position
   const findLru = (temp, frame) => {
     let minimum = temp[0];
     let pos = 0;
@@ -87,6 +86,10 @@ const LRU = (props) => {
     return pos;
   };
 
+  // LRU Algo code
+
+  // Time complexity = O(page * frame)
+  // Space Complexity = O(page)
   const lruResultMaker = (page, frame, seq) => {
     console.log("LRU Result Maker");
     let temp = [];
@@ -101,23 +104,25 @@ const LRU = (props) => {
     let frame_arr = [];
     let hit;
     let fault;
+    let index_arr = [];
 
+    // initialize every element to -1
     for (let i = 0; i < frames; i++) {
       frame_arr[i] = -1;
     }
 
-    console.log(frame_arr);
-
+    // Page sequence iteration
     for (let i = 0; i < page; i++) {
       flag1 = 0;
       flag2 = 0;
       hit = false;
       fault = false;
 
+      // If page seq already in array
       for (let j = 0; j < frame; j++) {
         if (seq[i] === frame_arr[j]) {
           counter++;
-
+          index_arr.push(j);
           flag1 = 1;
           flag2 = 1;
           hit = true;
@@ -125,12 +130,14 @@ const LRU = (props) => {
         }
       }
 
+      //  Check if frame_arr contains -1
       if (flag1 === 0) {
         for (let j = 0; j < frame; j++) {
           if (frame_arr[j] === -1) {
             faults++;
             counter++;
             frame_arr[j] = seq[i];
+            index_arr.push(j);
             temp[j] = counter;
             flag2 = 1;
             fault = true;
@@ -139,15 +146,18 @@ const LRU = (props) => {
         }
       }
 
+      // to get the position of least recently used
       if (flag2 === 0) {
         pos = findLru(temp, frame);
         faults++;
         counter++;
         frame_arr[pos] = seq[i];
+        index_arr.push(pos);
         temp[pos] = counter;
         fault = true;
       }
 
+      // initialize array and push current array into it
       let elements = [];
       elements.push(`P${i + 1}   (${seq[i]})`);
       for (let j = 0; j < frame; j++) {
@@ -158,26 +168,74 @@ const LRU = (props) => {
       } else if (fault === true) {
         elements.push("FAULT");
       }
-      console.log(elements);
 
-      console.log("\t");
       result.push(elements);
     }
-    console.log(result);
-    console.log("Total Page Faults : ", faults);
 
-    return { result, faults };
+    return { result, faults, index_arr };
   };
 
+  // To create a result from our output array
   const rowResultMaker = (page, frame, seq) => {
-    const { result } = lruResultMaker(page, frame, seq);
+    const { result, index_arr } = lruResultMaker(page, frame, seq);
+   
+
     return (
       <>
         {result.map((item, index) => {
+          let lastEle = item[item.length - 1];
+        
           return (
             <tr>
-              {item.map((i, index) => {
-                return <td className={classes.main}>{i}</td>;
+              {item.map((i, ind) => {
+                return (
+                  <>
+                    {ind !== index_arr[index] + 1 ? (
+                      <>
+                        <td
+                          className={classes.main}
+                          style={{
+                            backgroundColor: `${
+                              ind !== item.length - 1
+                                ? "inherit"
+                                : lastEle === "HIT"
+                                ? "rgb(105 228 0 / 86%)"
+                                : "#fa2c2c"
+                            }`,
+                          }}
+                        >
+                          {i}
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        {lastEle === "HIT" ? (
+                          <>
+                            <td
+                              className={classes.main}
+                              style={{
+                                backgroundColor: "rgb(40 226 63 / 67%)",
+                              }}
+                            >
+                              {i}
+                            </td>
+                          </>
+                        ) : (
+                          <>
+                            <td
+                              className={classes.main}
+                              style={{
+                                backgroundColor: "rgb(248 85 85 / 95%)",
+                              }}
+                            >
+                              {i}
+                            </td>
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                );
               })}
             </tr>
           );

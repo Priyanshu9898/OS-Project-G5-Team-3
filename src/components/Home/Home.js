@@ -125,20 +125,20 @@ const Home = () => {
 
   const frameHanadler = (e) => {
     setFrame(e.target.value);
-    if (Number.isInteger(e.target.value)) {
-      setError(null);
-    } else {
-      setError("Please enter a valid positive integer");
-    }
+    // if (Number.isInteger(e.target.value)) {
+    //   setError(null);
+    // } else {
+    //   setError("Please enter a valid positive integer");
+    // }
   };
 
   const pageHanadler = (e) => {
     setPage(e.target.value);
-    if (Number.isInteger(parseInt(e.target.value))) {
-      setError(null);
-    } else {
-      setError("Please enter a valid positive integer");
-    }
+    // if (Number.isInteger(parseInt(e.target.value))) {
+    //   setError(null);
+    // } else {
+    //   setError("Please enter a valid positive integer");
+    // }
   };
 
   const seqHandler = (e) => {
