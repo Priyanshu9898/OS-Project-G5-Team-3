@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography, makeStyles } from "@material-ui/core";
 import PieChart from "./PieChart";
 import TableHeader from "./TableHeader";
+import RowResultMaker from "./RowResultMaker";
 
 const useStyles = makeStyles({
   table: {
@@ -49,7 +50,6 @@ const useStyles = makeStyles({
 const LRU = (props) => {
   const classes = useStyles();
 
-  const pages = props.page;
   const frames = props.frame;
 
   const pageSeq = props.seq;
@@ -64,7 +64,9 @@ const LRU = (props) => {
           return (
             <th
               className={classes.main}
-              style={{ backgroundColor: "#273c3c" }}
+              style={{
+                backgroundColor: "#273c3c",
+              }}
             >{`FRAME ${item}`}</th>
           );
         })}
@@ -90,7 +92,7 @@ const LRU = (props) => {
 
   // Time complexity = O(page * frame)
   // Space Complexity = O(page)
-  const lruResultMaker = (page, frame, seq) => {
+  const lruResultMaker = (frame, seq) => {
     console.log("LRU Result Maker");
     let temp = [];
     let flag1;
@@ -107,12 +109,10 @@ const LRU = (props) => {
     let index_arr = [];
 
     // initialize every element to -1
-    for (let i = 0; i < frames; i++) {
-      frame_arr[i] = -1;
-    }
+    for (let i = 0; i < frames; i++) frame_arr[i] = -1;
 
     // Page sequence iteration
-    for (let i = 0; i < page; i++) {
+    for (let i = 0; i < seq.length; i++) {
       flag1 = 0;
       flag2 = 0;
       hit = false;
@@ -122,6 +122,7 @@ const LRU = (props) => {
       for (let j = 0; j < frame; j++) {
         if (seq[i] === frame_arr[j]) {
           counter++;
+          temp[j] = counter;
           index_arr.push(j);
           flag1 = 1;
           flag2 = 1;
@@ -135,9 +136,9 @@ const LRU = (props) => {
         for (let j = 0; j < frame; j++) {
           if (frame_arr[j] === -1) {
             faults++;
-            counter++;
             frame_arr[j] = seq[i];
             index_arr.push(j);
+            counter++;
             temp[j] = counter;
             flag2 = 1;
             fault = true;
@@ -151,23 +152,19 @@ const LRU = (props) => {
         pos = findLru(temp, frame);
         faults++;
         counter++;
+        temp[pos] = counter;
         frame_arr[pos] = seq[i];
         index_arr.push(pos);
-        temp[pos] = counter;
         fault = true;
       }
 
       // initialize array and push current array into it
       let elements = [];
       elements.push(`P${i + 1}   (${seq[i]})`);
-      for (let j = 0; j < frame; j++) {
-        elements.push(frame_arr[j]);
-      }
-      if (hit === true) {
-        elements.push("HIT");
-      } else if (fault === true) {
-        elements.push("FAULT");
-      }
+      for (let j = 0; j < frame; j++) elements.push(frame_arr[j]);
+
+      if (hit === true) elements.push("HIT");
+      else if (fault === true) elements.push("FAULT");
 
       result.push(elements);
     }
@@ -175,86 +172,13 @@ const LRU = (props) => {
     return { result, faults, index_arr };
   };
 
-  // To create a result from our output array
-  const rowResultMaker = (page, frame, seq) => {
-    const { result, index_arr } = lruResultMaker(page, frame, seq);
-   
+  const { result, faults, index_arr } = lruResultMaker(frames, pageSeq);
 
-    return (
-      <>
-        {result.map((item, index) => {
-          let lastEle = item[item.length - 1];
-        
-          return (
-            <tr>
-              {item.map((i, ind) => {
-                return (
-                  <>
-                    {ind !== index_arr[index] + 1 ? (
-                      <>
-                        <td
-                          className={classes.main}
-                          style={{
-                            backgroundColor: `${
-                              ind !== item.length - 1
-                                ? "inherit"
-                                : lastEle === "HIT"
-                                ? "rgb(105 228 0 / 86%)"
-                                : "#fa2c2c"
-                            }`,
-                          }}
-                        >
-                          {i}
-                        </td>
-                      </>
-                    ) : (
-                      <>
-                        {lastEle === "HIT" ? (
-                          <>
-                            <td
-                              className={classes.main}
-                              style={{
-                                backgroundColor: "rgb(40 226 63 / 67%)",
-                              }}
-                            >
-                              {i}
-                            </td>
-                          </>
-                        ) : (
-                          <>
-                            <td
-                              className={classes.main}
-                              style={{
-                                backgroundColor: "rgb(248 85 85 / 95%)",
-                              }}
-                            >
-                              {i}
-                            </td>
-                          </>
-                        )}
-                      </>
-                    )}
-                  </>
-                );
-              })}
-            </tr>
-          );
-        })}
-      </>
-    );
-  };
-
-  const { faults } = lruResultMaker(pages, frames, pageSeq);
-  const pageHits = pages - faults;
+  const pageHits = pageSeq.length - faults;
 
   return (
     <>
-      <TableHeader
-        // page={props.page}
-        // frame={props.frame}
-        // pageSeq={props.mainSeq}
-        algoName={"LRU (Least Recently Used)"}
-      />
+      <TableHeader algoName={"LRU (Least Recently Used)"} />
 
       <Box className={classes.table}>
         <table style={{ overflowX: "auto" }}>
@@ -262,14 +186,22 @@ const LRU = (props) => {
             <tr>
               <th
                 className={classes.main}
-                style={{ backgroundColor: "#273c3c", padding: "20px" }}
+                style={{
+                  backgroundColor: "#273c3c",
+
+                  padding: "20px",
+                }}
               >
                 PAGES
               </th>
               {frameCreator(arr)}
               <th
                 className={classes.main}
-                style={{ backgroundColor: "#273c3c", padding: "20px" }}
+                style={{
+                  backgroundColor: "#273c3c",
+
+                  padding: "20px",
+                }}
               >
                 RESULT
               </th>
@@ -277,7 +209,7 @@ const LRU = (props) => {
           </thead>
 
           <tbody className={classes.result}>
-            {rowResultMaker(pages, frames, pageSeq)}
+            {<RowResultMaker result={result} index_arr={index_arr} />}
           </tbody>
         </table>
         <Box className={classes.summary}>
@@ -289,7 +221,7 @@ const LRU = (props) => {
               Total Frames: {props.frame}
             </Typography>
             <Typography className={classes.sumText}>
-              Total Pages: {props.page}
+              Total Pages: {props.seq.length}
             </Typography>
             <Typography className={classes.sumText}>
               Page Sequence: {props.mainSeq}

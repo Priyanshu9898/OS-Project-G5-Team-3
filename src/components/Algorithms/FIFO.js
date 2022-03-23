@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 const FIFO = (props) => {
   const classes = useStyles();
-  const pages = props.page;
+
   const frames = props.frame;
 
   const pageSeq = props.seq;
@@ -82,7 +82,7 @@ const FIFO = (props) => {
   // Time complexity = O(page * frame)
   // Space Complexity = O(page)
 
-  const fifoResultGiver = (page, frame, seq) => {
+  const fifoResultGiver = (frame, seq) => {
     let pageFaults = 0;
 
     let temp = [frame];
@@ -144,9 +144,8 @@ const FIFO = (props) => {
 
   // Row maker
 
-  const rowResultMaker = (pages, frames, pageSeq) => {
-    const { result, index_arr } = fifoResultGiver(pages, frames, pageSeq);
-  
+  const rowResultMaker = (frames, pageSeq) => {
+    const { result, index_arr } = fifoResultGiver(frames, pageSeq);
 
     return (
       <>
@@ -167,8 +166,16 @@ const FIFO = (props) => {
                               ind !== item.length - 1
                                 ? "inherit"
                                 : lastEle === "HIT"
-                                ? "rgb(105 228 0 / 86%)"
-                                : "#fa2c2c"
+                                ? "#7C99AC"
+                                : "#FFCDDD"
+                            }`,
+                            border: `${
+                              ind !== item.length - 1
+                                ? "1px solid white"
+                                : "1px solid black"
+                            }`,
+                            color: `${
+                              ind !== item.length - 1 ? "inherit" : "black"
                             }`,
                           }}
                         >
@@ -182,7 +189,7 @@ const FIFO = (props) => {
                             <td
                               className={classes.main}
                               style={{
-                                backgroundColor: "rgb(40 226 63 / 67%)",
+                                backgroundColor: "rgb(105 228 0 / 86%)",
                               }}
                             >
                               {i}
@@ -193,7 +200,7 @@ const FIFO = (props) => {
                             <td
                               className={classes.main}
                               style={{
-                                backgroundColor: "rgb(248 85 85 / 95%)",
+                                backgroundColor: "#fa2c2c",
                               }}
                             >
                               {i}
@@ -212,8 +219,8 @@ const FIFO = (props) => {
     );
   };
 
-  const { pageFaults } = fifoResultGiver(pages, frames, pageSeq);
-  const pageHits = pages - pageFaults;
+  const { pageFaults } = fifoResultGiver(frames, pageSeq);
+  const pageHits = pageSeq.length - pageFaults;
   return (
     <>
       <TableHeader
@@ -244,7 +251,7 @@ const FIFO = (props) => {
           </thead>
 
           <tbody className={classes.result}>
-            {rowResultMaker(pages, frames, pageSeq)}
+            {rowResultMaker(frames, pageSeq)}
           </tbody>
         </table>
         <Box className={classes.summary}>
@@ -256,7 +263,7 @@ const FIFO = (props) => {
               Total Frames: {props.frame}
             </Typography>
             <Typography className={classes.sumText}>
-              Total Pages: {props.page}
+              Total Pages: {props.seq.length}
             </Typography>
             <Typography className={classes.sumText}>
               Page Sequence: {props.mainSeq}

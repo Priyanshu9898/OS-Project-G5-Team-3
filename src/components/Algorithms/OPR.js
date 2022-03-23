@@ -49,7 +49,6 @@ const useStyles = makeStyles({
 const OPR = (props) => {
   const classes = useStyles();
 
-  const pages = props.page;
   const frames = props.frame;
 
   const pageSeq = props.seq;
@@ -73,7 +72,7 @@ const OPR = (props) => {
       </>
     );
   };
-  const oprResultMaker = (page, frame, seq) => {
+  const oprResultMaker = (frame, seq) => {
     console.log("OPR Result Maker");
     let temp = [];
     let flag1;
@@ -92,7 +91,7 @@ const OPR = (props) => {
       frame_arr[i] = -1;
     }
 
-    for (let i = 0; i < page; i++) {
+    for (let i = 0; i < seq.length; i++) {
       flag1 = 0;
       flag2 = 0;
       hit = false;
@@ -127,7 +126,7 @@ const OPR = (props) => {
         for (let j = 0; j < frame; j++) {
           temp[j] = -1;
 
-          for (let k = i + 1; k < page; k++) {
+          for (let k = i + 1; k < seq.length; k++) {
             if (frame_arr[j] === seq[k]) {
               temp[j] = k;
 
@@ -183,8 +182,8 @@ const OPR = (props) => {
     return { result, faults, index_arr };
   };
 
-  const rowResultMaker = (page, frame, seq) => {
-    const { result, index_arr } = oprResultMaker(page, frame, seq);
+  const rowResultMaker = (frame, seq) => {
+    const { result, index_arr } = oprResultMaker(frame, seq);
 
     return (
       <>
@@ -205,8 +204,16 @@ const OPR = (props) => {
                               ind !== item.length - 1
                                 ? "inherit"
                                 : lastEle === "HIT"
-                                ? "rgb(105 228 0 / 86%)"
-                                : "#fa2c2c"
+                                ? "#7C99AC"
+                                : "#FFCDDD"
+                            }`,
+                            border: `${
+                              ind !== item.length - 1
+                                ? "1px solid white"
+                                : "1px solid black"
+                            }`,
+                            color: `${
+                              ind !== item.length - 1 ? "inherit" : "black"
                             }`,
                           }}
                         >
@@ -220,7 +227,7 @@ const OPR = (props) => {
                             <td
                               className={classes.main}
                               style={{
-                                backgroundColor: "rgb(40 226 63 / 67%)",
+                                backgroundColor: "rgb(105 228 0 / 86%)",
                               }}
                             >
                               {i}
@@ -231,7 +238,7 @@ const OPR = (props) => {
                             <td
                               className={classes.main}
                               style={{
-                                backgroundColor: "rgb(248 85 85 / 95%)",
+                                backgroundColor: "#fa2c2c",
                               }}
                             >
                               {i}
@@ -250,8 +257,8 @@ const OPR = (props) => {
     );
   };
 
-  const { faults } = oprResultMaker(pages, frames, pageSeq);
-  const pageHits = pages - faults;
+  const { faults } = oprResultMaker(frames, pageSeq);
+  const pageHits = pageSeq.length - faults;
 
   return (
     <>
@@ -283,7 +290,7 @@ const OPR = (props) => {
           </thead>
 
           <tbody className={classes.result}>
-            {rowResultMaker(pages, frames, pageSeq)}
+            {rowResultMaker(frames, pageSeq)}
           </tbody>
         </table>
         <Box className={classes.summary}>
@@ -295,7 +302,7 @@ const OPR = (props) => {
               Total Frames: {props.frame}
             </Typography>
             <Typography className={classes.sumText}>
-              Total Pages: {props.page}
+              Total Pages: {props.seq.length}
             </Typography>
             <Typography className={classes.sumText}>
               Page Sequence: {props.mainSeq}

@@ -49,7 +49,6 @@ const useStyles = makeStyles({
 const MRU = (props) => {
   const classes = useStyles();
 
-  const pages = props.page;
   const frames = props.frame;
 
   const pageSeq = props.seq;
@@ -76,7 +75,7 @@ const MRU = (props) => {
   // MRU Result Maker
   // Time complexity = O(page * frame)
   // Space Complexity = O(page)
-  const mruResultMaker = (page, frame, seq) => {
+  const mruResultMaker = (frame, seq) => {
     console.log("MRU Result Maker");
 
     let flag1;
@@ -95,7 +94,7 @@ const MRU = (props) => {
     for (let i = 0; i < frames; i++) frame_arr[i] = -1;
 
     // for every page in sequence
-    for (let i = 0; i < page; i++) {
+    for (let i = 0; i < seq.length; i++) {
       flag1 = 0;
       flag2 = 0;
       hit = false;
@@ -157,10 +156,9 @@ const MRU = (props) => {
   };
 
   // Creating row for table
-  const rowResultMaker = (page, frame, seq) => {
-    const { result, index_arr } = mruResultMaker(page, frame, seq);
-   
-   
+  const rowResultMaker = (frame, seq) => {
+    const { result, index_arr } = mruResultMaker(frame, seq);
+
     return (
       <>
         {result.map((item, index) => {
@@ -180,8 +178,16 @@ const MRU = (props) => {
                               ind !== item.length - 1
                                 ? "inherit"
                                 : lastEle === "HIT"
-                                ? "rgb(105 228 0 / 86%)"
-                                : "#fa2c2c"
+                                ? "#7C99AC"
+                                : "#FFCDDD"
+                            }`,
+                            border: `${
+                              ind !== item.length - 1
+                                ? "1px solid white"
+                                : "1px solid black"
+                            }`,
+                            color: `${
+                              ind !== item.length - 1 ? "inherit" : "black"
                             }`,
                           }}
                         >
@@ -195,7 +201,7 @@ const MRU = (props) => {
                             <td
                               className={classes.main}
                               style={{
-                                backgroundColor: "rgb(40 226 63 / 67%)",
+                                backgroundColor: "rgb(105 228 0 / 86%)",
                               }}
                             >
                               {i}
@@ -206,7 +212,7 @@ const MRU = (props) => {
                             <td
                               className={classes.main}
                               style={{
-                                backgroundColor: "rgb(248 85 85 / 95%)",
+                                backgroundColor: "#fa2c2c",
                               }}
                             >
                               {i}
@@ -225,8 +231,8 @@ const MRU = (props) => {
     );
   };
 
-  const { faults } = mruResultMaker(pages, frames, pageSeq);
-  const pageHits = pages - faults;
+  const { faults } = mruResultMaker(frames, pageSeq);
+  const pageHits = pageSeq.length - faults;
 
   return (
     <>
@@ -258,7 +264,7 @@ const MRU = (props) => {
           </thead>
 
           <tbody className={classes.result}>
-            {rowResultMaker(pages, frames, pageSeq)}
+            {rowResultMaker(frames, pageSeq)}
           </tbody>
         </table>
         <Box className={classes.summary}>
@@ -270,7 +276,7 @@ const MRU = (props) => {
               Total Frames: {props.frame}
             </Typography>
             <Typography className={classes.sumText}>
-              Total Pages: {props.page}
+              Total Pages: {props.seq.length}
             </Typography>
             <Typography className={classes.sumText}>
               Page Sequence: {props.mainSeq}

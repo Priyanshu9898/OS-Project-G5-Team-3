@@ -116,7 +116,7 @@ const Home = () => {
   const classes = useStyles();
 
   const [frame, setFrame] = useState(0);
-  const [page, setPage] = useState(0);
+
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [seq, setSeq] = useState([]);
@@ -126,15 +126,6 @@ const Home = () => {
   const frameHanadler = (e) => {
     setFrame(e.target.value);
     // if (Number.isInteger(e.target.value)) {
-    //   setError(null);
-    // } else {
-    //   setError("Please enter a valid positive integer");
-    // }
-  };
-
-  const pageHanadler = (e) => {
-    setPage(e.target.value);
-    // if (Number.isInteger(parseInt(e.target.value))) {
     //   setError(null);
     // } else {
     //   setError("Please enter a valid positive integer");
@@ -160,9 +151,9 @@ const Home = () => {
   const handleClickFcfs = async (e) => {
     console.log("FIFO");
 
-    if (frame < 0 || page < 0) {
-      setError("Frames and Pages can not be Negative");
-    } else if (frame === 0 || page === 0 || seq.length === 0) {
+    if (frame < 0) {
+      setError("Frames can not be Negative");
+    } else if (frame === 0 || seq.length === 0) {
       setError("Please fill all the fields");
     } else {
       try {
@@ -192,9 +183,9 @@ const Home = () => {
 
   const handleClickLru = () => {
     console.log("LRU");
-    if (frame < 0 || page < 0) {
-      setError("Frames and Pages can not be Negative");
-    } else if (frame === 0 || page === 0 || seq.length === 0) {
+    if (frame < 0) {
+      setError("Frames can not be Negative");
+    } else if (frame === 0 || seq.length === 0) {
       setError("Please fill all the fields");
     } else {
       try {
@@ -224,9 +215,9 @@ const Home = () => {
   };
   const handleClickMru = () => {
     console.log("MRU");
-    if (frame < 0 || page < 0) {
-      setError("Frames and Pages can not be Negative");
-    } else if (frame === 0 || page === 0 || seq.length === 0) {
+    if (frame < 0) {
+      setError("Frames can not be Negative");
+    } else if (frame === 0 || seq.length === 0) {
       setError("Please fill all the fields");
     } else {
       try {
@@ -257,9 +248,9 @@ const Home = () => {
   const handleClickOpr = () => {
     console.log("OPR");
 
-    if (frame < 0 || page < 0) {
-      setError("Frames and Pages can not be Negative");
-    } else if (frame === 0 || page === 0 || seq.length === 0) {
+    if (frame < 0) {
+      setError("Frames can not be Negative");
+    } else if (frame === 0 || seq.length === 0) {
       setError("Please fill all the fields");
     } else {
       try {
@@ -276,7 +267,7 @@ const Home = () => {
           }
         }
 
-        let len = seqArr.length === page;
+        let len = seqArr.length;
 
         if (isNeagtive) {
           setError(
@@ -293,7 +284,7 @@ const Home = () => {
   const handleReset = () => {
     console.log("RESET");
     setFrame(0);
-    setPage(0);
+
     setSeq("");
     setResult("none");
     setError(null);
@@ -306,10 +297,6 @@ const Home = () => {
     { key: 4, title: "MRU", func: handleClickMru },
     { key: 5, title: "RESET", func: handleReset },
   ];
-
-  const handleInfoButton = () => {
-    console.log("Info button clicked");
-  };
 
   return (
     <>
@@ -342,39 +329,21 @@ const Home = () => {
                   onChange={frameHanadler}
                 />
               </Box>
+
               <Box className={classes.inputBox}>
                 <Typography variant="h6" className={classes.label}>
-                  Enter Number of Pages
+                  Enter The Page Sequence
                 </Typography>
+
                 <input
-                  type="number"
+                  type="text"
                   className={classes.input}
-                  id="page"
-                  name="page"
-                  value={page}
-                  onChange={pageHanadler}
+                  id="seq"
+                  name="seq"
+                  value={seq}
+                  onChange={seqHandler}
                 />
               </Box>
-              {page > 0 ? (
-                <>
-                  <Box className={classes.inputBox}>
-                    <Typography variant="h6" className={classes.label}>
-                      Enter The Page Sequence
-                    </Typography>
-
-                    <input
-                      type="text"
-                      className={classes.input}
-                      id="seq"
-                      name="seq"
-                      value={seq}
-                      onChange={seqHandler}
-                    />
-                  </Box>
-                </>
-              ) : (
-                <></>
-              )}
 
               <Box className={classes.btns}>
                 {buttons.map((btn, index) => {
@@ -412,28 +381,28 @@ const Home = () => {
         {/* Result ends here */}
         {result === "fifo" && error === null ? (
           <>
-            <FIFO frame={frame} page={page} seq={seqArr} mainSeq={seq} />
+            <FIFO frame={frame} seq={seqArr} mainSeq={seq} />
           </>
         ) : (
           <></>
         )}
         {result === "opr" ? (
           <>
-            <OPR frame={frame} page={page} seq={seqArr} mainSeq={seq} />
+            <OPR frame={frame} seq={seqArr} mainSeq={seq} />
           </>
         ) : (
           <></>
         )}
         {result === "lru" ? (
           <>
-            <LRU frame={frame} page={page} seq={seqArr} mainSeq={seq} />
+            <LRU frame={frame} seq={seqArr} mainSeq={seq} />
           </>
         ) : (
           <></>
         )}
         {result === "mru" ? (
           <>
-            <MRU frame={frame} page={page} seq={seqArr} mainSeq={seq} />
+            <MRU frame={frame} seq={seqArr} mainSeq={seq} />
           </>
         ) : (
           <></>
