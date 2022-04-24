@@ -109,7 +109,8 @@ const LRU = (props) => {
     let index_arr = [];
 
     // initialize every element to -1
-    for (let i = 0; i < frames; i++) frame_arr[i] = -1;
+    for (let i = 0; i < frames; i++) 
+      frame_arr[i] = -1;
 
     // Page sequence iteration
     for (let i = 0; i < seq.length; i++) {
